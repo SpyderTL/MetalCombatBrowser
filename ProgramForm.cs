@@ -45,6 +45,35 @@ namespace MetalCombatBrowser
 					case "song":
 						var song = int.Parse(item.Name);
 
+						Midi.MidiPlayer.Song = song;
+
+						// Load APU Driver
+						//var position = MetalCombatRom.ApuDataAddress;
+
+						//while (true)
+						//{
+						//	var length2 = BitConverter.ToUInt16(Snes.Snes.Memory, position);
+						//	position += 2;
+
+						//	if (length2 == 0)
+						//	{
+						//		var startAddress = BitConverter.ToUInt16(Snes.Snes.Memory, position);
+
+						//		Console.WriteLine("Apu.StartAddress = 0x" + startAddress.ToString("X4"));
+						//		break;
+						//	}
+
+						//	var address = BitConverter.ToUInt16(Snes.Snes.Memory, position);
+						//	position += 2;
+
+						//	var data = new byte[length2];
+
+						//	Array.Copy(Snes.Snes.Memory, position, Apu.Memory, address, length2);
+
+						//	position += length2;
+						//}
+
+						// Load Song Data
 						var position = MetalCombatRom.SongTableAddress + (song * 8);
 
 						var source = Snes.Snes.Memory[position + 0] | (Snes.Snes.Memory[position + 1] << 8) | (Snes.Snes.Memory[position + 2] << 16);
@@ -52,6 +81,9 @@ namespace MetalCombatBrowser
 						var destination = BitConverter.ToUInt16(Snes.Snes.Memory, position + 5);
 
 						Array.Copy(Snes.Snes.Memory, source + 0xB90000, Apu.Memory, destination, length);
+
+						//RomInstruments.Load();
+
 						SongReader.Position = destination;
 
 						SongWindow.Show();

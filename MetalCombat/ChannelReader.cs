@@ -30,6 +30,7 @@ namespace MetalCombat
 		public static int Tuning;
 		public static int PitchSlide;
 		public static int Delay;
+		public static InstrumentRecord[] Instruments;
 
 		public static void Read()
 		{
@@ -81,9 +82,9 @@ namespace MetalCombat
 
 				//if (Apu.Memory[Position] != 0xf9)
 				//{
-					Delay = 0;
-					Duration = 0;
-					PitchSlide = 0;
+				Delay = 0;
+				Duration = 0;
+				PitchSlide = 0;
 				//}
 				//else
 				//{
@@ -105,7 +106,8 @@ namespace MetalCombat
 			}
 			else if (Value == 0xD6)
 			{
-				EventType = EventTypes.Other;
+				EventType = EventTypes.Instrument;
+				Instrument = Apu.Memory[Position];
 				Position += 1;
 			}
 			else if (Value == 0xD7)
@@ -140,7 +142,8 @@ namespace MetalCombat
 			}
 			else if (Value == 0xDD)
 			{
-				EventType = EventTypes.Other;
+				EventType = EventTypes.Tempo;
+				Tempo = Apu.Memory[Position];
 				Position += 1;
 			}
 			else if (Value == 0xDE)
@@ -288,13 +291,25 @@ namespace MetalCombat
 			}
 			else if (Value == 0xFA)
 			{
-				EventType = EventTypes.Other;
+				EventType = EventTypes.LoadInstruments;
 				var length = Apu.Memory[Position++];
-				Position += length * 4;
+
+				Instruments = new InstrumentRecord[length];
+
+				for (var instrument = 0; instrument < length; instrument++)
+				{
+					Instruments[instrument].Value1 = Apu.Memory[Position++];
+					Instruments[instrument].Value2 = Apu.Memory[Position++];
+					Instruments[instrument].Value3 = Apu.Memory[Position++];
+					Instruments[instrument].Value4 = Apu.Memory[Position++];
+				}
+
+				//Position += length * 4;
 			}
 			else if (Value == 0xFB)
 			{
-				EventType = EventTypes.Other;
+				EventType = EventTypes.FindInstrument;
+				Instrument = Apu.Memory[Position];
 				Position += 1;
 			}
 			else if (Value == 0xFC)
@@ -349,6 +364,16 @@ namespace MetalCombat
 			VibratoOn,
 			VibratoOff,
 			GlobalTranspose,
+			LoadInstruments,
+			FindInstrument,
+		}
+
+		public struct InstrumentRecord
+		{
+			public int Value1;
+			public int Value2;
+			public int Value3;
+			public int Value4;
 		}
 	}
 }

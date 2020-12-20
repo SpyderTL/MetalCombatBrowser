@@ -15,5 +15,8 @@ namespace MetalCombat
 		internal static int SongTableAddress = 0xBA8200;
 		internal static int SongCount = 226;
 		//internal static int TrackTableAddress = 0xC200;
+
+		internal static int InstrumentDataAddress = 0x1980;
+		internal static int InstrumentCount = 64;
 	}
 }

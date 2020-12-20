@@ -68,8 +68,8 @@ namespace MetalCombat
 		{
 			Playing = true;
 			Repeat = -1;
-			Tempo = 1000.0;
-			TempoTarget = 1000.0;
+			Tempo = 16.0;
+			TempoTarget = 16.0;
 			TempoTimer = 0.0;
 			Volume = 0xff;
 			VolumeTarget = 0xff;
@@ -179,7 +179,7 @@ namespace MetalCombat
 				for (var channel = 0; channel < 8 && !stopped; channel++)
 				{
 					if (NoteTimers[channel] > 0.0)
-						NoteTimers[channel] -= elapsed * Tempo * 0.58;
+						NoteTimers[channel] -= elapsed * Tempo * 19.2;
 
 					if (ChannelVolumeTimer[channel] > 0.0)
 					{
@@ -207,7 +207,7 @@ namespace MetalCombat
 
 					if (ChannelPortamentoTimer[channel] > 0.0)
 					{
-						ChannelPortamentoTimer[channel] -= elapsed * Tempo * 0.58;
+						ChannelPortamentoTimer[channel] -= elapsed * Tempo * 19.2;
 
 						if (ChannelPortamentoTimer[channel] <= 0.0)
 						{
@@ -219,7 +219,7 @@ namespace MetalCombat
 
 					if (TrackReader.Channels[channel] != 0)
 					{
-						ChannelTimers[channel] -= elapsed * Tempo * 0.58;
+						ChannelTimers[channel] -= elapsed * Tempo * 19.2;
 
 						while (ChannelTimers[channel] < 0 && !stopped)
 						{
@@ -271,12 +271,17 @@ namespace MetalCombat
 								ChannelDurations[channel] = ChannelReader.Duration;
 								ChannelVelocities[channel] = ChannelReader.Velocity;
 							}
+							else if (ChannelReader.EventType == ChannelReader.EventTypes.LoadInstruments)
+							{
+								//Instruments = ChannelReader.Instruments;
+							}
 							else if (ChannelReader.EventType == ChannelReader.EventTypes.Instrument)
 							{
-								//if ((ChannelReader.Instrument & 0x80) == 0)
-									ChannelInstruments[channel] = ChannelReader.Instrument;
-								//else
-								//	ChannelInstruments[channel] = ChannelReader.Instrument - 0xCA + PercussionInstrumentOffset;
+								ChannelInstruments[channel] = ChannelReader.Instrument;
+							}
+							else if (ChannelReader.EventType == ChannelReader.EventTypes.FindInstrument)
+							{
+								ChannelInstruments[channel] = ChannelReader.Instruments[ChannelReader.Instrument].Value1;
 							}
 							else if (ChannelReader.EventType == ChannelReader.EventTypes.Pan)
 							{

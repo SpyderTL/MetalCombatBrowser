@@ -35,23 +35,41 @@ namespace MetalCombatBrowser
 			//Form.Channel7Label.Text = SongPlayer.ChannelNotes[6] == 0 ? string.Empty : SongPlayer.ChannelNotes[6].ToString("X2");
 			//Form.Channel8Label.Text = SongPlayer.ChannelNotes[7] == 0 ? string.Empty : SongPlayer.ChannelNotes[7].ToString("X2");
 
-			Form.Channel1Label.Text = TrackReader.Channels[0].ToString("X4");
-			Form.Channel2Label.Text = TrackReader.Channels[1].ToString("X4");
-			Form.Channel3Label.Text = TrackReader.Channels[2].ToString("X4");
-			Form.Channel4Label.Text = TrackReader.Channels[3].ToString("X4");
-			Form.Channel5Label.Text = TrackReader.Channels[4].ToString("X4");
-			Form.Channel6Label.Text = TrackReader.Channels[5].ToString("X4");
-			Form.Channel7Label.Text = TrackReader.Channels[6].ToString("X4");
-			Form.Channel8Label.Text = TrackReader.Channels[7].ToString("X4");
+			Form.Channel1Label.Text = SongPlayer.ChannelNotes[0] == 0 ? string.Empty : SongPlayer.ChannelInstruments[0].ToString("X2");
+			Form.Channel2Label.Text = SongPlayer.ChannelNotes[1] == 0 ? string.Empty : SongPlayer.ChannelInstruments[1].ToString("X2");
+			Form.Channel3Label.Text = SongPlayer.ChannelNotes[2] == 0 ? string.Empty : SongPlayer.ChannelInstruments[2].ToString("X2");
+			Form.Channel4Label.Text = SongPlayer.ChannelNotes[3] == 0 ? string.Empty : SongPlayer.ChannelInstruments[3].ToString("X2");
+			Form.Channel5Label.Text = SongPlayer.ChannelNotes[4] == 0 ? string.Empty : SongPlayer.ChannelInstruments[4].ToString("X2");
+			Form.Channel6Label.Text = SongPlayer.ChannelNotes[5] == 0 ? string.Empty : SongPlayer.ChannelInstruments[5].ToString("X2");
+			Form.Channel7Label.Text = SongPlayer.ChannelNotes[6] == 0 ? string.Empty : SongPlayer.ChannelInstruments[6].ToString("X2");
+			Form.Channel8Label.Text = SongPlayer.ChannelNotes[7] == 0 ? string.Empty : SongPlayer.ChannelInstruments[7].ToString("X2");
 
-			//Form.Channel1Label.Left = 80 + (SongPlayer.ChannelNotes[0] * 8);
-			//Form.Channel2Label.Left = 80 + (SongPlayer.ChannelNotes[1] * 8);
-			//Form.Channel3Label.Left = 80 + (SongPlayer.ChannelNotes[2] * 8);
-			//Form.Channel4Label.Left = 80 + (SongPlayer.ChannelNotes[3] * 8);
-			//Form.Channel5Label.Left = 80 + (SongPlayer.ChannelNotes[4] * 8);
-			//Form.Channel6Label.Left = 80 + (SongPlayer.ChannelNotes[5] * 8);
-			//Form.Channel7Label.Left = 80 + (SongPlayer.ChannelNotes[6] * 8);
-			//Form.Channel8Label.Left = 80 + (SongPlayer.ChannelNotes[7] * 8);
+			//Form.Channel1Label.Text = SongPlayer.ChannelNotes[0] == 0 ? string.Empty : RomInstruments.Instruments[SongPlayer.ChannelInstruments[0]].Value1.ToString("X2");
+			//Form.Channel2Label.Text = SongPlayer.ChannelNotes[1] == 0 ? string.Empty : RomInstruments.Instruments[SongPlayer.ChannelInstruments[1]].Value1.ToString("X2");
+			//Form.Channel3Label.Text = SongPlayer.ChannelNotes[2] == 0 ? string.Empty : RomInstruments.Instruments[SongPlayer.ChannelInstruments[2]].Value1.ToString("X2");
+			//Form.Channel4Label.Text = SongPlayer.ChannelNotes[3] == 0 ? string.Empty : RomInstruments.Instruments[SongPlayer.ChannelInstruments[3]].Value1.ToString("X2");
+			//Form.Channel5Label.Text = SongPlayer.ChannelNotes[4] == 0 ? string.Empty : RomInstruments.Instruments[SongPlayer.ChannelInstruments[4]].Value1.ToString("X2");
+			//Form.Channel6Label.Text = SongPlayer.ChannelNotes[5] == 0 ? string.Empty : RomInstruments.Instruments[SongPlayer.ChannelInstruments[5]].Value1.ToString("X2");
+			//Form.Channel7Label.Text = SongPlayer.ChannelNotes[6] == 0 ? string.Empty : RomInstruments.Instruments[SongPlayer.ChannelInstruments[6]].Value1.ToString("X2");
+			//Form.Channel8Label.Text = SongPlayer.ChannelNotes[7] == 0 ? string.Empty : RomInstruments.Instruments[SongPlayer.ChannelInstruments[7]].Value1.ToString("X2");
+
+			//Form.Channel1Label.Text = TrackReader.Channels[0].ToString("X4");
+			//Form.Channel2Label.Text = TrackReader.Channels[1].ToString("X4");
+			//Form.Channel3Label.Text = TrackReader.Channels[2].ToString("X4");
+			//Form.Channel4Label.Text = TrackReader.Channels[3].ToString("X4");
+			//Form.Channel5Label.Text = TrackReader.Channels[4].ToString("X4");
+			//Form.Channel6Label.Text = TrackReader.Channels[5].ToString("X4");
+			//Form.Channel7Label.Text = TrackReader.Channels[6].ToString("X4");
+			//Form.Channel8Label.Text = TrackReader.Channels[7].ToString("X4");
+
+			Form.Channel1Label.Left = 80 + (SongPlayer.ChannelNotes[0] * 8);
+			Form.Channel2Label.Left = 80 + (SongPlayer.ChannelNotes[1] * 8);
+			Form.Channel3Label.Left = 80 + (SongPlayer.ChannelNotes[2] * 8);
+			Form.Channel4Label.Left = 80 + (SongPlayer.ChannelNotes[3] * 8);
+			Form.Channel5Label.Left = 80 + (SongPlayer.ChannelNotes[4] * 8);
+			Form.Channel6Label.Left = 80 + (SongPlayer.ChannelNotes[5] * 8);
+			Form.Channel7Label.Left = 80 + (SongPlayer.ChannelNotes[6] * 8);
+			Form.Channel8Label.Left = 80 + (SongPlayer.ChannelNotes[7] * 8);
 		}
 
 		private static void PlayButton_Click(object sender, EventArgs e)

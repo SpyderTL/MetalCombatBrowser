@@ -7,6 +7,8 @@ namespace Midi
 {
 	public static class MidiPlayer
 	{
+		public static int Song;
+
 		public static int MasterVolume;
 
 		public static int[] Notes;
@@ -62,7 +64,7 @@ namespace Midi
 
 			for (var channel = 0; channel < 8; channel++)
 			{
-				//UpdateInstruments(channel);
+				UpdateInstruments(channel);
 				UpdateVolume(channel);
 				UpdatePan(channel);
 				UpdateTuning(channel);
@@ -115,11 +117,15 @@ namespace Midi
 					//if (Notes[channel] != 0)
 					//	Midi.NoteOff(9, Drums[channel], 0);
 
+					var note = SongPlayer.ChannelInstruments[channel] == 0 ?
+						36 :
+						38;
+
 					//Midi.NoteOn(9, 38, (int)((SongPlayer.ChannelVelocities[channel] / 15.0f) * 127.0f));
-					Midi.NoteOn(9, 38, (int)(((SongPlayer.ChannelVelocities[channel] + 1) / 64.0f) * 127.0f));
+					Midi.NoteOn(9, note, (int)(((SongPlayer.ChannelVelocities[channel] + 1) / 64.0f) * 127.0f));
 					//Midi.NoteOn(9, 38, 127);
 
-					Midi.NoteOff(9, 38, 0);
+					Midi.NoteOff(9, note, 0);
 				}
 
 				Notes[channel] = SongPlayer.ChannelNotes[channel];
@@ -172,9 +178,137 @@ namespace Midi
 					Midi.NoteOff(channel, Notes[channel] + NoteOffsets[channel], 0);
 				}
 
-				Midi.ProgramChange(channel, SongPlayer.ChannelInstruments[channel]);
+				var instrument = 80;
+				var offset = 12;
+
+				switch (SongPlayer.ChannelInstruments[channel])
+				{
+					case 0x06:
+						//instrument = 121;
+						instrument = 122;
+						offset = 0;
+						break;
+
+					case 0x10:
+						instrument = 29;
+						break;
+
+					case 0x11:
+						instrument = 38;
+						//instrument = 80;
+						//instrument = 36;
+						//instrument = 87;
+						break;
+
+					case 0x12:
+						instrument = 18;
+						//instrument = 20;
+						//instrument = 82;
+						break;
+
+					case 0x13:
+						//instrument = 83;
+						//instrument = 50;
+						instrument = 48;
+						offset = 24;
+						break;
+
+					case 0x14:
+						instrument = 112;
+						offset = 36;
+						break;
+
+					case 0x15:
+						//instrument = 38;
+						instrument = 29;
+						offset = 12;
+						break;
+
+					case 0x1A:
+						//instrument = 30;
+						instrument = 29;
+						offset = 12;
+						break;
+
+					case 0x1B:
+						instrument = 38;
+						//instrument = 39;
+						offset = 24;
+						break;
+
+					case 0x1D:
+						instrument = 49;
+						//instrument = 39;
+						offset = 24;
+						break;
+
+					case 0x36:
+						//instrument = 56;
+						instrument = 61;
+						//instrument = 63;
+						//instrument = 51;
+						offset = 24;
+						break;
+
+					case 0x3A:
+						if (Song == 0x03)
+						{
+							instrument = 114;
+							offset = 36;
+						}
+						else if (Song == 0x0B)
+						{
+							instrument = 56;
+							offset = 12;
+						}
+						else
+						{
+							instrument = 82;
+							offset = 36;
+						}
+						break;
+
+					case 0x3B:
+						if (Song == 0x05)
+						{
+							instrument = 56;
+							offset = 24;
+						}
+						else if (Song == 0x0B)
+						{
+							//instrument = 56;
+							//instrument = 57;
+							instrument = 61;
+							//instrument = 58;
+							offset = 24;
+						}
+						else
+						{
+							instrument = 104;
+							//instrument = 106;
+							//instrument = 105;
+							//instrument = 84;
+							//instrument = 82;
+							//instrument = 83;
+							offset = 36;
+						}
+						break;
+
+					case 0x3C:
+						instrument = 56;
+						offset = 24;
+						break;
+
+					case 0x3E:
+						instrument = 38;
+						offset = 24;
+						break;
+				}
+
+				Midi.ProgramChange(channel, instrument);
 
 				Instruments[channel] = SongPlayer.ChannelInstruments[channel];
+				NoteOffsets[channel] = offset;
 			}
 		}
 	}
